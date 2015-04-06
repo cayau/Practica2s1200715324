@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1428304253 source:c:\users\ayau1_000\documents\edd\1er semestre 2015\practica2s12015_200715324\main.c
+1428321102 source:c:\users\ayau1_000\documents\edd\1er semestre 2015\practica2s12015_200715324\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -9,7 +9,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1428304397 c:\users\ayau1_000\documents\edd\1er semestre 2015\practica2s12015_200715324\avl.h
+1428318486 c:\users\ayau1_000\documents\edd\1er semestre 2015\practica2s12015_200715324\avl.h
 	<stdio.h>
 	<stdlib.h>
 

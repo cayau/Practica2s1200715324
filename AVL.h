@@ -139,9 +139,20 @@ void inorder(node *T)
    if(T!=NULL)
    {
       inorder(T->left);
-      printf("*");
+      printf("%d,",T->data);
+      //printf("*");
       //printf("%d(FE=%d) ",T->data,FE(T));
       inorder(T->right);
+   }
+}
+
+void postorden(node *T)
+{
+    if(T!=NULL)
+   {
+      postorden(T->left);
+      postorden(T->right);
+      free(T);
    }
 }
 

@@ -32,7 +32,6 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="AVL.h" />
-		<Unit filename="lista.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
