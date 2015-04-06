@@ -31,14 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="arbolAVL.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="arbolAVL.h" />
+		<Unit filename="AVL.h" />
+		<Unit filename="lista.h" />
 		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="nodoAVL.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
