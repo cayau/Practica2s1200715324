@@ -6,7 +6,7 @@
 void ingresarArbol(FILE *f);
 void ingresarLista();
 void ordenamientoBurbuja(int a[], FILE *f);
-void quickSort(int x[], int f, int l, FILE *fi, int d);
+void quickSort(int x[], int f, int l, FILE *fi, int *d);
 void imprimirLista(int a[]);
 
 clock_t ini1, ini2, ini3, ini4;
@@ -89,7 +89,7 @@ int main()
                     int d=1;
                     f = fopen("C:\\in\\grafQuickSort.txt", "w");
                     ini4 = clock();
-                    quickSort(lista,0,numDatos, f, d);
+                    quickSort(lista,0,numDatos, f, &d);
                     //imprimirLista(lista);
                     fin4 = clock();
                     t4 = (fin4-ini4)/(float)CLOCKS_PER_SEC;
@@ -177,9 +177,9 @@ void ordenamientoBurbuja(int a[], FILE *grafica3){
     auxI=0;
 }
 
-void quickSort(int x[], int first, int last, FILE *grafica4, int da){
+void quickSort(int x[], int first, int last, FILE *grafica4, int *d){
     int pivot, j, temp, i;
-    int d = da;
+
     clock_t inicio = clock();
     if(first<last){
         pivot = first;
@@ -198,8 +198,8 @@ void quickSort(int x[], int first, int last, FILE *grafica4, int da){
             }
 
             clock_t aux_f = clock();
-            fprintf(grafica4, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,d);
-            d++;
+            fprintf(grafica4, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,(*d) );
+            (*d)++;
         }
         temp = x[pivot];
         x[pivot] = x[j];
