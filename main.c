@@ -54,10 +54,10 @@ int main()
                     FILE *f;
                     int d=1;
                     f = fopen("C:\\in\\grafRecorridoArbol.txt", "w");
-                    inorder(raiz, f, &d);
+                    inorder(raiz, f, &d, ini2);
+                    fin2 = clock();
                     fclose(f);
                 }
-                fin2 = clock();
                 t2 = (float)((fin2-ini2)/CLOCKS_PER_SEC);
                 printf("\n Recorrido arbol - %f segundos\n",t2);
                 system("pause");
@@ -180,7 +180,6 @@ void ordenamientoBurbuja(int a[], FILE *grafica3){
 void quickSort(int x[], int first, int last, FILE *grafica4, int *d){
     int pivot, j, temp, i;
 
-    clock_t inicio = clock();
     if(first<last){
         pivot = first;
         i = first;
@@ -198,7 +197,7 @@ void quickSort(int x[], int first, int last, FILE *grafica4, int *d){
             }
 
             clock_t aux_f = clock();
-            fprintf(grafica4, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,(*d) );
+            fprintf(grafica4, "%f %i \n", ((aux_f-ini4))/(float)CLOCKS_PER_SEC,(*d) );
             (*d)++;
         }
         temp = x[pivot];

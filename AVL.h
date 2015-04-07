@@ -12,7 +12,7 @@ typedef struct node
 }node;
 
 node *insert(node *,int);
-void  inorder(node *, FILE *f,int *d);
+void  inorder(node *, FILE *f,int *d, clock_t i);
 int   height( node *);
 node *rotateright(node *);
 node *rotateleft(node *);
@@ -134,19 +134,19 @@ int FE(node *T)
    return(lh-rh);
 }
 
-void inorder(node *T, FILE *grafica2, int *d)
+void inorder(node *T, FILE *grafica2, int *d, clock_t i)
 {
+   clock_t inicio = clock();
    if(T!=NULL)
    {
-       clock_t inicio = clock();
-       inorder(T->left, grafica2, d);
+       inorder(T->left, grafica2, d, i);
 
        printf("%d,",T->data);
        clock_t aux_f = clock();
-       fprintf(grafica2, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,(*d) );
+       fprintf(grafica2, "%f %i \n", ((aux_f-i))/(float)CLOCKS_PER_SEC,(*d) );
        (*d)++;
 
-       inorder(T->right, grafica2, d);
+       inorder(T->right, grafica2, d, i);
    }
 }
 
