@@ -3,10 +3,10 @@
 #include <time.h>
 #include "AVL.h"
 
-void ingresarArbol();
+void ingresarArbol(FILE *f);
 void ingresarLista();
-void ordenamientoBurbuja(int a[]);
-void quickSort(int x[], int f, int l);
+void ordenamientoBurbuja(int a[], FILE *f);
+void quickSort(int x[], int f, int l, FILE *fi, int d);
 void imprimirLista(int a[]);
 
 clock_t ini1, ini2, ini3, ini4;
@@ -39,19 +39,23 @@ int main()
                 printf("Ingrese la direccion del archivo con los datos: \n");
                 path = (char *)malloc(128 *sizeof(char));
                 scanf("%s", path);
-                ini1 = clock();
-                ingresarArbol();
-                fin1 = clock();
-                t1 = (float)((fin1-ini1)/CLOCKS_PER_SEC);
+                FILE *f;
+                f = fopen("C:\\in\\grafInsercionArbol.txt", "w");
+                ingresarArbol(f);
                 printf("\n Ingresar arbol - %f segundos\n",t1);
+                fclose(f);
                 system("pause");
                 break;
             case 2:
                 ini2 = clock();
                 if(raiz==NULL){
                     printf(" ARBOL VACIO!!");
-                }else{
-                    inorder(raiz);
+                }else{\
+                    FILE *f;
+                    int d=1;
+                    f = fopen("C:\\in\\grafRecorridoArbol.txt", "w");
+                    inorder(raiz, f, &d);
+                    fclose(f);
                 }
                 fin2 = clock();
                 t2 = (float)((fin2-ini2)/CLOCKS_PER_SEC);
@@ -59,33 +63,39 @@ int main()
                 system("pause");
                 break;
             case 3:
-                //postorden(raiz);
                 if(!path){
                     printf(" INGRESE UN ARBOL!!");
                 }else{
-                    int lista[numDatos];
-                    ingresarLista(&lista);
-                    ini3 = clock();
-                    ordenamientoBurbuja(&lista);
-                    fin3 = clock();
-                    t3 = (float)((fin3-ini3)/CLOCKS_PER_SEC);
+                    int *lista;
+                    lista = (int*)malloc(numDatos *sizeof(int));
+                    ingresarLista(lista);
+                    FILE *f;
+                    f = fopen("C:\\in\\grafBurbuja.txt", "w");
+                    ordenamientoBurbuja(lista, f);
                     printf("\n Ordenamiento Burbuja - %f segundos\n",t3);
+                    fclose(f);
+                    free(lista);
                 }
                 system("pause");
                 break;
             case 4:
-                //postorden(raiz);
                 if(!path){
                     printf(" INGRESE UN ARBOL!!");
                 }else{
-                    int lista[numDatos];
+                    int *lista;
+                    lista = (int*)malloc(numDatos *sizeof(int));
                     ingresarLista(lista);
+                    FILE *f;
+                    int d=1;
+                    f = fopen("C:\\in\\grafQuickSort.txt", "w");
                     ini4 = clock();
-                    quickSort(lista,0,numDatos);
-                    imprimirLista(lista);
+                    quickSort(lista,0,numDatos, f, d);
+                    //imprimirLista(lista);
                     fin4 = clock();
-                    t4 = (float)((fin4-ini4)/CLOCKS_PER_SEC);
+                    t4 = (fin4-ini4)/(float)CLOCKS_PER_SEC;
                     printf("\n Ordenamiento Quicksort - %f segundos\n",t4);
+                    fclose(f);
+                    free(lista);
                 }
                 system("pause");
                 break;
@@ -101,16 +111,23 @@ int main()
     return 0;
 }
 
-void ingresarArbol(){
+void ingresarArbol(FILE *grafica1){
     file = fopen(path,"r");
     if (file==NULL){
         printf(" Archivo no encontrado o no existe");
     }else{
         char buf[15]; numDatos=0;
+        int datos = 1;
+        clock_t inicio = clock();
         while (fgets(buf, sizeof buf, file) != NULL){
             int val = atoi(buf);
             raiz = insert(raiz, val);
             numDatos++;
+
+            clock_t aux_f = clock();
+            fprintf(grafica1, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,datos);
+            t1 = ((aux_f-inicio))/(float)CLOCKS_PER_SEC;
+            datos++;
         }
         fclose(file);
     }
@@ -140,8 +157,10 @@ void imprimirLista(int a[]){
     }
 }
 
-void ordenamientoBurbuja(int a[]){
+void ordenamientoBurbuja(int a[], FILE *grafica3){
     int i=0, j=0, auxI=0;
+    int datos = 1;
+    clock_t inicio = clock();
     for(i=0; i<(numDatos-1) ; i++){
         for(j=0; j<(numDatos-i-1) ; j++){
             if(a[j]>a[j+1]){
@@ -150,13 +169,18 @@ void ordenamientoBurbuja(int a[]){
                 a[j+1] = auxI;
             }
         }
+        clock_t aux_f = clock();
+        fprintf(grafica3, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,datos);
+        t3 = ((aux_f-inicio))/(float)CLOCKS_PER_SEC;
+        datos++;
     }
     auxI=0;
 }
 
-void quickSort(int x[numDatos], int first, int last){
+void quickSort(int x[], int first, int last, FILE *grafica4, int da){
     int pivot, j, temp, i;
-
+    int d = da;
+    clock_t inicio = clock();
     if(first<last){
         pivot = first;
         i = first;
@@ -172,11 +196,16 @@ void quickSort(int x[numDatos], int first, int last){
                 x[i] = x[j];
                 x[j] = temp;
             }
+
+            clock_t aux_f = clock();
+            fprintf(grafica4, "%f %i \n", ((aux_f-inicio))/(float)CLOCKS_PER_SEC,d);
+            d++;
         }
         temp = x[pivot];
         x[pivot] = x[j];
         x[j] = temp;
-        quickSort(x, first, j-1);
-        quickSort(x, j+1, last);
+
+        quickSort(x, first, j-1, grafica4, d);
+        quickSort(x, j+1, last, grafica4, d);
     }
 }
